@@ -75,7 +75,7 @@ public class LinkedListGenerator {
 
     public static void main(String[] args) throws IOException {
         DefaultExports.initialize();
-        HTTPServer server = new HTTPServer(2112);
+        HTTPServer server = new HTTPServer(2112); // Sets up Prometheus server
 
         new Thread(() -> {
             List<GarbageCollectorMXBean> gcBeans = ManagementFactory.getGarbageCollectorMXBeans();
