@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 1s # Adjust the scrape interval as needed
+
+scrape_configs:
+  - job_name: 'go-application'
+    static_configs:
+      - targets: ['go-app:2112'] # Use the service name defined in docker-compose

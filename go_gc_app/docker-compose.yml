@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  go-app:
+    build: .
+    ports:
+      - "2112:2112" # Expose the port for the Go application metrics
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090" # Expose the port for the Prometheus UI
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "secret"
+    ports:
+      - "3000:3000" # Expose the port for the Grafana UI
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
